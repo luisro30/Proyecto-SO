@@ -19,13 +19,15 @@ public class menu extends javax.swing.JFrame {
      * Creates new form menu
      */
     Reloj reloj = new Reloj();
-    
+
     public menu() {
         initComponents();
         reloj.start();
     }
+    
+    int quantum = 10;
 
-        public class Reloj extends Thread {
+    public class Reloj extends Thread {
 
         Calendar obtener;
 
@@ -34,20 +36,23 @@ public class menu extends javax.swing.JFrame {
             while (true) {
                 obtener = Calendar.getInstance();
                 if (obtener.get(Calendar.HOUR_OF_DAY) < 10) {
-                    hora.setText(String.valueOf(obtener.get(Calendar.HOUR_OF_DAY)) + " :"); } 
-               else {
-                    hora.setText(String.valueOf(obtener.get(Calendar.HOUR_OF_DAY)) + " :"); }
-               
+                    hora.setText(String.valueOf("0" + obtener.get(Calendar.HOUR_OF_DAY)) + " :");
+                } else {
+                    hora.setText(String.valueOf(obtener.get(Calendar.HOUR_OF_DAY)) + " :");
+                }
+
                 if (obtener.get(Calendar.MINUTE) < 10) {
-                    minutos.setText(String.valueOf(obtener.get(Calendar.MINUTE)) + " :");} 
-                else {
-                    minutos.setText(String.valueOf(obtener.get(Calendar.MINUTE)) + " :");}
-                
+                    minutos.setText(String.valueOf("0" + obtener.get(Calendar.MINUTE)) + " :");
+                } else {
+                    minutos.setText(String.valueOf(obtener.get(Calendar.MINUTE)) + " :");
+                }
+
                 if (obtener.get(Calendar.SECOND) < 10) {
-                    segudos.setText(String.valueOf(obtener.get(Calendar.SECOND)) );  }
-               else {
-                    segudos.setText(String.valueOf(obtener.get(Calendar.SECOND)) ); }
-               
+                    segudos.setText(String.valueOf("0" + obtener.get(Calendar.SECOND)));
+                } else {
+                    segudos.setText(String.valueOf(obtener.get(Calendar.SECOND)));
+                }
+
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -56,7 +61,26 @@ public class menu extends javax.swing.JFrame {
             }
         }
     }
-    
+
+    public class Creacion extends Thread {
+
+        @Override
+        public void run() {
+            while (true) {
+                
+                int duracion = (int)(Math.random()*15+5);
+                int tamaño = (int)(Math.random()*10+1);
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

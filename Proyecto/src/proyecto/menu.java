@@ -5,9 +5,12 @@
  */
 package proyecto;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 
 /**
  *
@@ -20,6 +23,8 @@ public class menu extends javax.swing.JFrame {
      */
     Reloj reloj = new Reloj();
     Lista lista = new Lista();
+    RoundRobin rr = new RoundRobin();
+    boolean bandera;
     int quantum = 10;
     int c = 0;
 
@@ -27,6 +32,8 @@ public class menu extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         reloj.start();
+        rr.start();
+//                    
     }
 
     public class Reloj extends Thread {
@@ -70,18 +77,20 @@ public class menu extends javax.swing.JFrame {
                     nodo aux = lista.getInicio();
                     if (lista.getInicio() != null) {
                         for (int i = 0; i <= lista.getTamanio(); i++) {
-                            jLabelPrejec.setText("P" + aux.getNumero());
-                            Thread.sleep(aux.getDuracion()*1000);
-                            
-                            
                             System.out.println("P" + aux.getNumero() + " Tejec" + aux.getDuracion());
+
+                            if (aux.getDuracion() <= quantum) {
+                            }
+                            
+                            jLabelPrejec.setText("P" + aux.getNumero());
+                            Thread.sleep(aux.getDuracion() * 1000);
                             if (aux.getSiguiente() == null) {
                                 break;
                             }
                             aux = aux.getSiguiente();
                         }
                     } else {
-                        System.out.println("No hay elementos para mostrar");
+
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,8 +113,8 @@ public class menu extends javax.swing.JFrame {
         segudos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButtonCrear = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
         jLabelPrejec = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -131,14 +140,13 @@ public class menu extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 75, -1));
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 75, -1));
-        getContentPane().add(jLabelPrejec, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 110, 50));
+        jLabelPrejec.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jLabelPrejec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelPrejec.setText("PN");
+        getContentPane().add(jLabelPrejec, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 50, 110, 50));
+
+        jLabel2.setText("Calendarizador");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -146,13 +154,11 @@ public class menu extends javax.swing.JFrame {
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         int duracion = (int) (Math.random() * 11) + 5;
         c += 1;
-        lista.insertar(c, duracion);
-    }//GEN-LAST:event_jButtonCrearActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        RoundRobin rr = new RoundRobin();
-        rr.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
+        lista.insertar(c, duracion);
+
+
+    }//GEN-LAST:event_jButtonCrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -191,9 +197,9 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel hora;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelPrejec;
     private javax.swing.JLabel minutos;
     private javax.swing.JLabel segudos;

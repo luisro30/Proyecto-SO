@@ -35,12 +35,9 @@ public class menu extends javax.swing.JFrame {
         public void run() {
             while (true) {
                 obtener = Calendar.getInstance();
-                if (obtener.get(Calendar.HOUR_OF_DAY) < 10) {
-                    hora.setText(String.valueOf("0" + obtener.get(Calendar.HOUR_OF_DAY)) + " :");
-                } else {
-                    hora.setText(String.valueOf(obtener.get(Calendar.HOUR_OF_DAY)) + " :");
-                }
-
+              
+                hora.setText(String.valueOf(obtener.get(Calendar.HOUR_OF_DAY)) + " :");
+     
                 if (obtener.get(Calendar.MINUTE) < 10) {
                     minutos.setText(String.valueOf("0" + obtener.get(Calendar.MINUTE)) + " :");
                 } else {

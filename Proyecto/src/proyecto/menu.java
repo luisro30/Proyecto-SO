@@ -25,6 +25,7 @@ public class menu extends javax.swing.JFrame {
 
     public menu() {
         initComponents();
+        this.setLocationRelativeTo(null);
         reloj.start();
     }
 
@@ -60,14 +61,28 @@ public class menu extends javax.swing.JFrame {
         }
     }
 
-    public class Creacion extends Thread {
+    public class RoundRobin extends Thread {
 
         @Override
         public void run() {
             while (true) {
-
                 try {
-                    Thread.sleep(1000);
+                    nodo aux = lista.getInicio();
+                    if (lista.getInicio() != null) {
+                        for (int i = 0; i <= lista.getTamanio(); i++) {
+                            jLabelPrejec.setText("P" + aux.getNumero());
+                            Thread.sleep(aux.getDuracion()*1000);
+                            
+                            
+                            System.out.println("P" + aux.getNumero() + " Tejec" + aux.getDuracion());
+                            if (aux.getSiguiente() == null) {
+                                break;
+                            }
+                            aux = aux.getSiguiente();
+                        }
+                    } else {
+                        System.out.println("No hay elementos para mostrar");
+                    }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -90,17 +105,23 @@ public class menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jButtonCrear = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabelPrejec = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         hora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        getContentPane().add(hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(766, 446, 45, 53));
 
         minutos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        getContentPane().add(minutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(817, 446, 45, 53));
 
         segudos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        getContentPane().add(segudos, new org.netbeans.lib.awtextra.AbsoluteConstraints(868, 446, 74, 53));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("RELOJ EN TIEMPO REAL");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(779, 416, -1, 24));
 
         jButtonCrear.setText("Agregar");
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -108,6 +129,7 @@ public class menu extends javax.swing.JFrame {
                 jButtonCrearActionPerformed(evt);
             }
         });
+        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 75, -1));
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -115,71 +137,21 @@ public class menu extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(523, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(minutos, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(segudos, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(48, 48, 48))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(350, 350, 350))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(351, 351, 351)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(jButtonCrear)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(105, 105, 105)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(minutos, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(segudos, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30))
-        );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {hora, minutos, segudos});
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 75, -1));
+        getContentPane().add(jLabelPrejec, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 70, 110, 50));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         int duracion = (int) (Math.random() * 11) + 5;
-//        int tamanio = (int) (Math.random() * 10 + 1);
         c += 1;
         lista.insertar(c, duracion);
-
-//        System.out.println("l: " + lista.getTamanio() + " " + lista.getInicio().getNumero() + lista.getInicio().getDuracion());
-
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int c1 = 0;
-        while (c1<4) {
-            lista.mostrar();
-            c1+=1;
-        }
-
+        RoundRobin rr = new RoundRobin();
+        rr.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -222,6 +194,7 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelPrejec;
     private javax.swing.JLabel minutos;
     private javax.swing.JLabel segudos;
     // End of variables declaration//GEN-END:variables

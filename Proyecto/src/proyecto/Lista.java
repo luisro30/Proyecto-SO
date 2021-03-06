@@ -69,7 +69,7 @@ public class Lista {
         nodo aux = inicio;
         if (inicio != null) {
             for (int i = 0; i <= tamanio; i++) {
-                System.out.println("Valor: " + aux.getNumero() + " " + aux.getDuracion());
+                System.out.println("P" + aux.getNumero() + " Tejec" + aux.getDuracion());
                 if (aux.getSiguiente() == null) {
                     break;
                 }

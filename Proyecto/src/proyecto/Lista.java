@@ -12,48 +12,71 @@ package proyecto;
 public class Lista {
 
     private nodo inicio;
-    private nodo ultimo;
+//    private nodo ultimo;
     private int tamanio;
 
     public Lista() {
         inicio = null;
-        ultimo = null;
+//        ultimo = null;
         tamanio = 0;
     }
 
     public boolean esVacia() {
-        return inicio == null;
+        if (inicio == null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getTamanio() {
         return tamanio;
     }
 
-    public void agregarAlInicio(int numero, int tamaño, int duracion) {
+    public void insertar(int numero, int duracion) {
         // Define un nuevo nodo.
         nodo nuevo = new nodo();
         nuevo.setNumero(numero);
         nuevo.setDuracion(duracion);
-        nuevo.setTamaño(tamaño);
+//        nuevo.setTamaño(tamaño);
         if (esVacia()) {
             inicio = nuevo;
-            ultimo = nuevo;
-            ultimo.setSiguiente(inicio);
+            tamanio++;
+//            ultimo = nuevo;
+//            ultimo.setSiguiente(inicio);
         } else {
-            nuevo.setSiguiente(inicio);
-            inicio = nuevo;
-            ultimo.setSiguiente(inicio);
+            nodo insertar = inicio;
+            for (int i = 1; i < tamanio; i++) {
+                insertar = insertar.getSiguiente();
+            }
+            insertar.setSiguiente(nuevo);
+            tamanio++;
+//            inicio = nuevo;
+//            ultimo.setSiguiente(inicio);
         }
-        tamanio++;
+//        tamanio++;
     }
 
     public nodo getInicio() {
         return inicio;
     }
 
-    public nodo getUltimo() {
-        return ultimo;
+//    public nodo getUltimo() {
+//        return ultimo;
+//    }
+
+    public void mostrar() {
+        nodo aux = inicio;
+        if (inicio != null) {
+            for (int i = 0; i <= tamanio; i++) {
+                System.out.println("Valor: " + aux.getNumero() + " " + aux.getDuracion());
+                if (aux.getSiguiente() == null) {
+                    break;
+                }
+                aux = aux.getSiguiente();
+            }
+        } else {
+            System.out.println("No hay elementos para mostrar");
+        }
     }
-    
-    
 }

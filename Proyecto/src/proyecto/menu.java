@@ -89,6 +89,7 @@ public class menu extends javax.swing.JFrame {
         segudos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jButtonCrear = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -105,6 +106,13 @@ public class menu extends javax.swing.JFrame {
         jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCrearActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -128,13 +136,19 @@ public class menu extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(350, 350, 350))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(351, 351, 351)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(105, 105, 105)
                 .addComponent(jButtonCrear)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 289, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 162, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addGap(105, 105, 105)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,13 +164,23 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-        int duracion = (int) (Math.random() * 15 + 5);
-        int tamanio = (int) (Math.random() * 10 + 1);
+        int duracion = (int) (Math.random() * 11) + 5;
+//        int tamanio = (int) (Math.random() * 10 + 1);
         c += 1;
-        lista.agregarAlInicio(c, tamanio, duracion);
-        System.out.println("l: " + lista.getTamanio()+" "+lista.getInicio().getNumero()+lista.getInicio().getDuracion());
-        
+        lista.insertar(c, duracion);
+
+//        System.out.println("l: " + lista.getTamanio() + " " + lista.getInicio().getNumero() + lista.getInicio().getDuracion());
+
     }//GEN-LAST:event_jButtonCrearActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int c1 = 0;
+        while (c1<4) {
+            lista.mostrar();
+            c1+=1;
+        }
+
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,6 +219,7 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel hora;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel minutos;

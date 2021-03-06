@@ -75,50 +75,8 @@ public class menu extends javax.swing.JFrame {
                 }
             }
         }
-
     }
-
-    
-
-    private nodo inicio;
-    private nodo ultimo;
-    private int tamanio;
-
-    public void Lista(){
-        inicio = null;
-        ultimo = null;
-        tamanio = 0;
-    }
-
-    public boolean esVacia(){
-        return inicio == null;
-    }
-
-    public int getTamanio(){
-        return tamanio;
-    }
-
-   
-    public void agregarAlInicio(int numero, int tamaño, int duracion){
-        // Define un nuevo nodo.
-        nodo nuevo = new nodo();
-        nuevo.setNumero(numero);
-        nuevo.setDuracion(duracion);
-        nuevo.setTamaño(tamaño);
-        if (esVacia()) {
-            inicio = nuevo;
-            ultimo = nuevo;  
-            ultimo.setSiguiente(inicio);
-        } else{
-            nuevo.setSiguiente(inicio);
-            inicio = nuevo;
-            ultimo.setSiguiente(inicio);
-        }
-        tamanio++;
-    }
-    
-    
-    
+ 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -132,6 +90,7 @@ public class menu extends javax.swing.JFrame {
         minutos = new javax.swing.JLabel();
         segudos = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jButtonCrear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -144,12 +103,19 @@ public class menu extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel1.setText("RELOJ EN TIEMPO REAL");
 
+        jButtonCrear.setText("Agregar");
+        jButtonCrear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonCrearActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(766, Short.MAX_VALUE)
+                .addContainerGap(523, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(hora, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -160,12 +126,17 @@ public class menu extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(48, 48, 48))))
+                        .addGap(48, 48, 48))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButtonCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(350, 350, 350))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(416, Short.MAX_VALUE)
+                .addGap(105, 105, 105)
+                .addComponent(jButtonCrear)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 289, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,6 +150,10 @@ public class menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+       Lista lista = new Lista();
+    }//GEN-LAST:event_jButtonCrearActionPerformed
 
     /**
      * @param args the command line arguments
@@ -217,6 +192,7 @@ public class menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel hora;
+    private javax.swing.JButton jButtonCrear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel minutos;
     private javax.swing.JLabel segudos;

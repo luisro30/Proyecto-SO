@@ -65,7 +65,7 @@ public class menu extends javax.swing.JFrame {
         public void run() {
             while (true) {
                 
-                int duracion = (int)(Math.random()*15+5);
+                int duracion = (int)(Math.random()*15+5); 
                 int tamaño = (int)(Math.random()*10+1);
 
                 try {
@@ -78,6 +78,47 @@ public class menu extends javax.swing.JFrame {
 
     }
 
+    
+
+    private nodo inicio;
+    private nodo ultimo;
+    private int tamanio;
+
+    public void Lista(){
+        inicio = null;
+        ultimo = null;
+        tamanio = 0;
+    }
+
+    public boolean esVacia(){
+        return inicio == null;
+    }
+
+    public int getTamanio(){
+        return tamanio;
+    }
+
+   
+    public void agregarAlInicio(int numero, int tamaño, int duracion){
+        // Define un nuevo nodo.
+        nodo nuevo = new nodo();
+        nuevo.setValor(numero);
+        nuevo.setDuracion(duracion);
+        nuevo.setTamaño(tamaño);
+        if (esVacia()) {
+            inicio = nuevo;
+            ultimo = nuevo;  
+            ultimo.setSiguiente(inicio);
+        } else{
+            nuevo.setSiguiente(inicio);
+            inicio = nuevo;
+            ultimo.setSiguiente(inicio);
+        }
+        tamanio++;
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

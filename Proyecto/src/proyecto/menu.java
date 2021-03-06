@@ -11,6 +11,8 @@ import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,12 +29,15 @@ public class menu extends javax.swing.JFrame {
     boolean bandera;
     int quantum = 10;
     int c = 0;
+    int tmemoria = 500;
 
     public menu() {
         initComponents();
         this.setLocationRelativeTo(null);
         reloj.start();
         rr.start();
+        tmemoria = tmemoria - 50;
+        tmem.setText(String.valueOf(tmemoria));
 //                    
     }
 
@@ -98,6 +103,14 @@ public class menu extends javax.swing.JFrame {
             }
         }
     }
+    
+    public void Ingresar(){
+    DefaultTableModel modelo=(DefaultTableModel) memoria.getModel();
+    Object[] miTabla = new Object[1];
+    miTabla[0]= "proceso  " + c;
+    modelo.addRow(miTabla);
+    memoria.setModel(modelo);
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,6 +128,11 @@ public class menu extends javax.swing.JFrame {
         jButtonCrear = new javax.swing.JButton();
         jLabelPrejec = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        memoria = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        tmem = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -138,7 +156,7 @@ public class menu extends javax.swing.JFrame {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 90, 75, -1));
+        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 640, 75, -1));
 
         jLabelPrejec.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jLabelPrejec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -148,14 +166,45 @@ public class menu extends javax.swing.JFrame {
         jLabel2.setText("Calendarizador");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, -1, -1));
 
+        memoria.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Proceso"
+            }
+        ));
+        jScrollPane3.setViewportView(memoria);
+
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 210, 540));
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+        jLabel3.setText("    S.O.");
+        jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 580, 210, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel4.setText("Memoria Restante");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 660, -1, 30));
+
+        tmem.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        tmem.setText("500");
+        getContentPane().add(tmem, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 660, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
         int duracion = (int) (Math.random() * 11) + 5;
+        if(tmemoria>=duracion){
+        tmemoria = tmemoria - duracion;
+        tmem.setText(String.valueOf(tmemoria));
         c += 1;
-
         lista.insertar(c, duracion);
+  Ingresar();}
+        
+        
+        else{JOptionPane.showMessageDialog(null, "memoria insuficiente");}
 
 
     }//GEN-LAST:event_jButtonCrearActionPerformed
@@ -200,8 +249,13 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JButton jButtonCrear;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelPrejec;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable memoria;
     private javax.swing.JLabel minutos;
     private javax.swing.JLabel segudos;
+    private javax.swing.JLabel tmem;
     // End of variables declaration//GEN-END:variables
 }

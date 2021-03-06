@@ -7,6 +7,7 @@ package proyecto;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ public class menu extends javax.swing.JFrame {
      * Creates new form menu
      */
     Reloj reloj = new Reloj();
-    Lista lista = new Lista();
+    ArrayList<nodo> lista = new ArrayList<>();
     RoundRobin rr = new RoundRobin();
     boolean bandera;
     int quantum = 10;
@@ -79,23 +80,26 @@ public class menu extends javax.swing.JFrame {
         public void run() {
             while (true) {
                 try {
-                    nodo aux = lista.getInicio();
-                    if (lista.getInicio() != null) {
-                        for (int i = 0; i <= lista.getTamanio(); i++) {
-                            System.out.println("P" + aux.getNumero() + " Tejec" + aux.getDuracion());
-
-                            if (aux.getDuracion() <= quantum) {
-                            }
-
-                            jtject.setText("P" + aux.getNumero());
-                            Thread.sleep(aux.getDuracion() * 1000);
-                            if (aux.getSiguiente() == null) {
-                                break;
-                            }
-                            aux = aux.getSiguiente();
-                        }
+                    if (lista.isEmpty()) {
+//                        System.out.println("En espera");
+                        jtject.setText("En espera");
+                        Thread.sleep(100);
                     } else {
 
+                        for (int i = 0; i < lista.size(); i++) {
+                            jtject.setText("P" + lista.get(i).getNumero());
+                            System.out.println("P" + lista.get(i).getNumero() + "ms: " + lista.get(i).getDuracion());
+                            if (lista.get(i).getDuracion() <= quantum) {
+                                Thread.sleep(lista.get(i).getDuracion() * 1000);
+                                lista.remove(lista.get(i));
+                            } else {
+                                int nuevaduracion = lista.get(i).getDuracion() - quantum;
+                                lista.get(i).setDuracion(nuevaduracion);
+
+                                System.out.println("%% " + lista.get(i).getDuracion());
+                                Thread.sleep(quantum * 1000);
+                            }
+                        }
                     }
                 } catch (InterruptedException ex) {
                     Logger.getLogger(menu.class.getName()).log(Level.SEVERE, null, ex);
@@ -104,10 +108,10 @@ public class menu extends javax.swing.JFrame {
         }
     }
 
-    public void Ingresar() {
+    public void Ingresar(int duracion) {
         DefaultTableModel modelo = (DefaultTableModel) memoria.getModel();
         Object[] miTabla = new Object[1];
-        miTabla[0] = "proceso  " + c;
+        miTabla[0] = "proceso  " + c + " " + duracion + "ms";
         modelo.addRow(miTabla);
         memoria.setModel(modelo);
     }
@@ -263,13 +267,15 @@ public class menu extends javax.swing.JFrame {
             tmemoria = tmemoria - duracion;
             tmem.setText(String.valueOf(tmemoria + " mb"));
             c += 1;
-            lista.insertar(c, duracion);
-            Ingresar();
-            if("".equals(historial.getText())){
-            historial.setText("Proceso " + String.valueOf(c) + " agregado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs" );
-            }
-            else{
-            historial.setText(historial.getText() + "\n" + "Proceso " + String.valueOf(c) + " agregado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs" );
+            nodo n = new nodo();
+            n.setNumero(c);
+            n.setDuracion(duracion);
+            lista.add(n);
+            Ingresar(duracion);
+            if ("".equals(historial.getText())) {
+                historial.setText("Proceso " + String.valueOf(c) + " agregado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs");
+            } else {
+                historial.setText(historial.getText() + "\n" + "Proceso " + String.valueOf(c) + " agregado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs");
             }
 
         } else {

@@ -89,15 +89,23 @@ public class menu extends javax.swing.JFrame {
                         for (int i = 0; i < lista.size(); i++) {
                             jtject.setText("P" + lista.get(i).getNumero());
                             System.out.println("P" + lista.get(i).getNumero() + "ms: " + lista.get(i).getDuracion());
-                            if (lista.get(i).getDuracion() <= quantum) {
-                                Thread.sleep(lista.get(i).getDuracion() * 1000);
+                            if (lista.get(i).getDuracion() == 0) {
                                 lista.remove(lista.get(i));
                             } else {
-                                int nuevaduracion = lista.get(i).getDuracion() - quantum;
-                                lista.get(i).setDuracion(nuevaduracion);
-
-                                System.out.println("%% " + lista.get(i).getDuracion());
-                                Thread.sleep(quantum * 1000);
+                                if (lista.get(i).getDuracion() <= quantum) {
+                                    int p = lista.get(i).getNumero();
+                                    System.out.println("proceso" + p);
+                                    Thread.sleep(lista.get(i).getDuracion() * 1000);
+                                    lista.get(i).setDuracion(0);
+//                                lista.remove(lista.get(i));
+                                } else {
+                                    int nuevaduracion = lista.get(i).getDuracion() - quantum;
+                                    lista.get(i).setDuracion(nuevaduracion);
+                                    int p = lista.get(i).getNumero();
+                                    System.out.println("proceso" + p);
+                                    System.out.println("%% " + lista.get(i).getDuracion());
+                                    Thread.sleep(quantum * 1000);
+                                }
                             }
                         }
                     }

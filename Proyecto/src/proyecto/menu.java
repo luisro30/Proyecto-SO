@@ -102,7 +102,7 @@ public class menu extends javax.swing.JFrame {
     public void agregarAlInicio(int numero, int tamaño, int duracion){
         // Define un nuevo nodo.
         nodo nuevo = new nodo();
-        nuevo.setValor(numero);
+        nuevo.setNumero(numero);
         nuevo.setDuracion(duracion);
         nuevo.setTamaño(tamaño);
         if (esVacia()) {

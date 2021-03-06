@@ -19,13 +19,14 @@ public class menu extends javax.swing.JFrame {
      * Creates new form menu
      */
     Reloj reloj = new Reloj();
+    Lista lista = new Lista();
+    int quantum = 10;
+    int c = 0;
 
     public menu() {
         initComponents();
         reloj.start();
     }
-    
-    int quantum = 10;
 
     public class Reloj extends Thread {
 
@@ -35,9 +36,9 @@ public class menu extends javax.swing.JFrame {
         public void run() {
             while (true) {
                 obtener = Calendar.getInstance();
-              
+
                 hora.setText(String.valueOf(obtener.get(Calendar.HOUR_OF_DAY)) + " :");
-     
+
                 if (obtener.get(Calendar.MINUTE) < 10) {
                     minutos.setText(String.valueOf("0" + obtener.get(Calendar.MINUTE)) + " :");
                 } else {
@@ -64,9 +65,6 @@ public class menu extends javax.swing.JFrame {
         @Override
         public void run() {
             while (true) {
-                
-                int duracion = (int)(Math.random()*15+5); 
-                int tamaño = (int)(Math.random()*10+1);
 
                 try {
                     Thread.sleep(1000);
@@ -76,7 +74,7 @@ public class menu extends javax.swing.JFrame {
             }
         }
     }
- 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -152,7 +150,12 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
-       Lista lista = new Lista();
+        int duracion = (int) (Math.random() * 15 + 5);
+        int tamanio = (int) (Math.random() * 10 + 1);
+        c += 1;
+        lista.agregarAlInicio(c, tamanio, duracion);
+        System.out.println("l: " + lista.getTamanio()+" "+lista.getInicio().getNumero()+lista.getInicio().getDuracion());
+        
     }//GEN-LAST:event_jButtonCrearActionPerformed
 
     /**

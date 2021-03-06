@@ -46,4 +46,14 @@ public class Lista {
         }
         tamanio++;
     }
+
+    public nodo getInicio() {
+        return inicio;
+    }
+
+    public nodo getUltimo() {
+        return ultimo;
+    }
+    
+    
 }

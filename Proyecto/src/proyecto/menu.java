@@ -31,9 +31,17 @@ public class menu extends javax.swing.JFrame {
     int quantum = 10;
     int c = 0;
     int tmemoria = 500;
+    DefaultTableModel modelo;
+    //Object[] miTabla = new Object[1];
 
     public menu() {
+       // DefaultTableModel modelo = (DefaultTableModel) memoria.getModel();
+        //Object[] miTabla = new Object[1];
+        modelo = new DefaultTableModel();
+
         initComponents();
+        modelo.addColumn("#Proceso");
+        this.memoria.setModel(modelo);
         this.setLocationRelativeTo(null);
         reloj.start();
         rr.start();
@@ -96,10 +104,16 @@ public class menu extends javax.swing.JFrame {
                                     int p = lista.get(i).getNumero();
                                     System.out.println("proceso" + p);
                                     Thread.sleep(lista.get(i).getDuracion() * 1000);
+                                    modelo.removeRow(lista.get(i).getNumero());
                                     lista.get(i).setDuracion(0);
+                                   // if(lista.get(i).getNumero()>=0){
+                                    
+                                    //}
+                                   
 //                                lista.remove(lista.get(i));
                                 } else {
                                     int nuevaduracion = lista.get(i).getDuracion() - quantum;
+                                    modelo.setValueAt(("proceso  " + lista.get(i).getNumero() + " " + nuevaduracion + " ms"), lista.get(i).getNumero()-1, 0);
                                     lista.get(i).setDuracion(nuevaduracion);
                                     int p = lista.get(i).getNumero();
                                     System.out.println("proceso" + p);
@@ -117,11 +131,11 @@ public class menu extends javax.swing.JFrame {
     }
 
     public void Ingresar(int duracion) {
-        DefaultTableModel modelo = (DefaultTableModel) memoria.getModel();
-        Object[] miTabla = new Object[1];
-        miTabla[0] = "proceso  " + c + " " + duracion + "ms";
-        modelo.addRow(miTabla);
-        memoria.setModel(modelo);
+
+        String []info=new String[1];  
+        info[0] = "proceso  " + c + " " + duracion + "ms";
+        modelo.addRow(info);
+        //memoria.setModel(modelo);
     }
 
     /**

@@ -50,7 +50,7 @@ public class menu extends javax.swing.JFrame {
         modelo.addColumn("Tiempo");
         modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
-        //      memoria.setBackground(Color.cyan);
+        memoria.setBackground(Color.CYAN);
         this.memoria.setModel(modelo);
         this.setLocationRelativeTo(null);
         reloj.start();
@@ -135,6 +135,9 @@ public class menu extends javax.swing.JFrame {
                                 jconp.setText(dir);
                                 System.out.println("proceso" + proceso);
                                 modelo.setValueAt(("Ejecutándose"), cuenta, 3);
+                                if (modelo.getValueAt(cuenta, 3).equals("Ejecutándose")) {
+                                    setBackground(Color.GREEN);
+                                }
                                 Thread.sleep(lista.get(cuenta).getDuracion() * 1000);
                                 modelo.setValueAt(("Finalizdo"), cuenta, 3);
                                 tmemoria = tmemoria + lista.get(cuenta).getDuracion();
@@ -167,6 +170,9 @@ public class menu extends javax.swing.JFrame {
                                 int nuevaduracion = lista.get(cuenta).getDuracion() - quantum;
                                 lista.get(cuenta).setDuracion(nuevaduracion);
                                 modelo.setValueAt(("Ejecutándose"), cuenta, 3);
+                                if (modelo.getValueAt(cuenta, 3).equals("Ejecutándose")) {
+                                    setBackground(Color.GREEN);
+                                }
                                 Thread.sleep(quantum * 1000);
                                 modelo.setValueAt(("En espera..."), cuenta, 3);
                                 tmemoria = tmemoria + quantum;

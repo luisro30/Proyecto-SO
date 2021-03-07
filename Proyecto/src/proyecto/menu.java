@@ -114,7 +114,7 @@ public class menu extends javax.swing.JFrame {
                                 lista.remove(cuenta);
                                 modelo.removeRow(cuenta);
                                 if (modelo.getRowCount()==0){
-                                System.out.println("Procesos Terminado");
+                                JOptionPane.showMessageDialog(null, "Procesos Finalizados");;
                                 break;}
                                 if(cuenta == (lista.size())){
                                     cuenta = 0;
@@ -228,7 +228,7 @@ public class menu extends javax.swing.JFrame {
                 jButtonCrearActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 40, 220, 80));
+        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 260, 80));
 
         jtject.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jtject.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -313,21 +313,23 @@ public class menu extends javax.swing.JFrame {
         jLabel11.setText("HISTORIAL");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 390, -1, 24));
 
-        jButton1.setText("jButton1");
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton1.setText("INICIAR PROCESOS");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 220, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 260, 80));
 
-        jButton2.setText("jButton2");
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jButton2.setText("LIMPIAR HISTORIAL");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 400, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 260, 80));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -362,8 +364,8 @@ public class menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        lista.remove(0);
-        System.out.println(lista.isEmpty());
+  historial.setText("");
+  c = 0;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

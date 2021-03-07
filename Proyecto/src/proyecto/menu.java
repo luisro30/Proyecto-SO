@@ -35,6 +35,7 @@ public class menu extends javax.swing.JFrame {
     int c = 0;
     int cantidad = 0;
     int tmemoria = 500;
+    int memi = 0;
 
     DefaultTableModel modelo;
     //Object[] miTabla = new Object[1];
@@ -49,7 +50,7 @@ public class menu extends javax.swing.JFrame {
         modelo.addColumn("Tiempo");
         modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
-  //      memoria.setBackground(Color.cyan);
+        //      memoria.setBackground(Color.cyan);
         this.memoria.setModel(modelo);
         this.setLocationRelativeTo(null);
         reloj.start();
@@ -57,6 +58,21 @@ public class menu extends javax.swing.JFrame {
         System.out.println(lista.isEmpty());
         tmem.setText(String.valueOf(tmemoria + " mb"));
 //                    
+    }
+
+    private void setBaseLimite(nodo n, int tmemoria) {
+        if (lista.size() == 1) {
+            n.setBase(50 + 1);
+
+            n.setLimite(n.getDuracion() + n.getBase());
+            memi = n.getLimite();
+            System.out.println("Nodo:" + n.getDuracion() + " B:" + n.getBase() + " L:" + n.getLimite());
+        } else {
+            n.setBase(memi + 1);
+            n.setLimite(n.getDuracion() + n.getBase());
+            memi = n.getLimite();
+            System.out.println("Nodo:" + n.getDuracion() + " B:" + n.getBase() + " L:" + n.getLimite());
+        }
     }
 
     public class Reloj extends Thread {
@@ -90,7 +106,6 @@ public class menu extends javax.swing.JFrame {
             }
         }
     }
-    
 
     public class RoundRobin extends Thread {
 
@@ -106,17 +121,18 @@ public class menu extends javax.swing.JFrame {
                         jtject.setText("En espera");
                         Thread.sleep(100);
                     } else {
-                        while (modelo.getRowCount()!=0) {
-
-                           
-
+                        while (modelo.getRowCount() != 0) {
                             if (lista.get(cuenta).getDuracion() <= quantum) {
-                                 proceso = lista.get(cuenta).getNumero();
-                                 dir = lista.get(cuenta).getDireccion();
-                                 jtject.setText("P" + proceso);
-                                 jconp.setText(dir);
+                                proceso = lista.get(cuenta).getNumero();
+                                dir = lista.get(cuenta).getDireccion();
+                                jtject.setText("P" + proceso);
+                                String hexadecimal1 = Integer.toHexString(lista.get(cuenta).getBase());
+                                jbase.setText("0x" + hexadecimal1 + "h");
+                                String hexadecimal2 = Integer.toHexString(lista.get(cuenta).getLimite());
+                                jlimite.setText("0x" + hexadecimal2 + "h");
+                                jconp.setText(dir);
                                 System.out.println("proceso" + proceso);
-                                modelo.setValueAt(("Ejecutándose"), cuenta, 3);         
+                                modelo.setValueAt(("Ejecutándose"), cuenta, 3);
                                 Thread.sleep(lista.get(cuenta).getDuracion() * 1000);
                                 modelo.setValueAt(("Finalizdo"), cuenta, 3);
                                 tmemoria = tmemoria + lista.get(cuenta).getDuracion();
@@ -125,48 +141,45 @@ public class menu extends javax.swing.JFrame {
                                         + " terminado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs");
                                 lista.remove(cuenta);
                                 modelo.removeRow(cuenta);
-                                if (modelo.getRowCount()==0){
-                                JOptionPane.showMessageDialog(null, "Procesos Finalizados");
-                                jconp.setText("-");
-                                break;}
-                                if(cuenta == (lista.size())){
+                                if (modelo.getRowCount() == 0) {
+                                    JOptionPane.showMessageDialog(null, "Procesos Finalizados");
+                                    jconp.setText("-");
+                                    break;
+                                }
+                                if (cuenta == (lista.size())) {
                                     cuenta = 0;
                                 }
                                 if (cuenta == 0) {
                                     cuenta = 0;
-                                } 
-
+                                }
                             }
-
                             if (lista.get(cuenta).getDuracion() > 10) {
                                 proceso = lista.get(cuenta).getNumero();
                                 dir = lista.get(cuenta).getDireccion();
                                 jconp.setText(dir);
                                 jtject.setText("P" + proceso);
+                                String hexadecimal1 = Integer.toHexString(lista.get(cuenta).getBase());
+                                jbase.setText("0x" + hexadecimal1 + "h");
+                                String hexadecimal2 = Integer.toHexString(lista.get(cuenta).getLimite());
+                                jlimite.setText("0x" + hexadecimal2 + "h");
                                 int nuevaduracion = lista.get(cuenta).getDuracion() - quantum;
                                 lista.get(cuenta).setDuracion(nuevaduracion);
                                 modelo.setValueAt(("Ejecutándose"), cuenta, 3);
-                                Thread.sleep(quantum * 1000);  
+                                Thread.sleep(quantum * 1000);
                                 modelo.setValueAt(("En espera..."), cuenta, 3);
                                 tmemoria = tmemoria + quantum;
                                 tmem.setText(String.valueOf(tmemoria) + " mb");
                                 modelo.setValueAt((nuevaduracion + " ms"), cuenta, 1);
-                                
-                                if ((lista.size()-1) == cuenta) {
+
+                                if ((lista.size() - 1) == cuenta) {
                                     cuenta = 0;
-                                }else {
-                                cuenta++;
+                                } else {
+                                    cuenta++;
                                 }
                                 if (lista.size() == 1) {
                                     cuenta = 0;
                                 }
-                                
-                           
-                                
-                                
                             }
-                            
-
                         }
 
                     }
@@ -187,12 +200,13 @@ public class menu extends javax.swing.JFrame {
         modelo.addRow(info);
     }
 
-public void Clear_Table1(){
-for (int i = 0; i < modelo.getRowCount(); i++) {
-modelo.removeRow(i);
-i-=1;
-}
-}
+    public void Clear_Table1() {
+        for (int i = 0; i < modelo.getRowCount(); i++) {
+            modelo.removeRow(i);
+            i -= 1;
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -214,11 +228,11 @@ i-=1;
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         tmem = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jconp = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jlimite = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jbase = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -289,9 +303,6 @@ i-=1;
         tmem.setText("500 mb");
         getContentPane().add(tmem, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, -1, -1));
 
-        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, 460, 580));
-
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Calendarizador");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 20, -1, -1));
@@ -310,6 +321,9 @@ i-=1;
         jlimite.setText("   LIMITE");
         jlimite.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(jlimite, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, 100, 50));
+
+        jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, 460, 580));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("BASE");
@@ -362,16 +376,19 @@ i-=1;
         char obtener;
         int duracion = (int) (Math.random() * 11) + 5;
         if (tmemoria >= duracion) {
-            tmemoria = tmemoria - duracion;
-            tmem.setText(String.valueOf(tmemoria + " mb"));
             c += 1;
             nodo n = new nodo();
             n.setNumero(c);
             n.setDuracion(duracion);
-            obtener = (char)(96+c);    
+            obtener = (char) (96 + c);
             n.setDireccion(String.valueOf(obtener));
             lista.add(n);
-            Ingresar(duracion,String.valueOf(obtener));
+            setBaseLimite(n, tmemoria);
+
+            tmemoria = tmemoria - duracion;
+            tmem.setText(String.valueOf(tmemoria + " mb"));
+
+            Ingresar(duracion, String.valueOf(obtener));
             if ("".equals(historial.getText())) {
                 historial.setText("Proceso " + String.valueOf(c) + " agregado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs");
             } else {
@@ -391,9 +408,9 @@ i-=1;
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-  historial.setText("");
-  Clear_Table1();
-  c = 0;
+        historial.setText("");
+        Clear_Table1();
+        c = 0;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**

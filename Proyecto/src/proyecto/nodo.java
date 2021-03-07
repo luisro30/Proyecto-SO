@@ -14,8 +14,9 @@ public class nodo {
 //    int tamaño;
     int duracion;
     int numero;
+    int base;
+    int limite;
     String direccion;
-    
 
     private nodo siguiente;
 
@@ -23,9 +24,10 @@ public class nodo {
         this.numero = 0;
         this.duracion = 0;
         this.direccion = "";
+        this.base = 0;
+        this.limite = 0;
         this.siguiente = null;
     }
-
 
     public int getDuracion() {
         return duracion;
@@ -49,6 +51,22 @@ public class nodo {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public int getBase() {
+        return base;
+    }
+
+    public void setBase(int base) {
+        this.base = base;
+    }
+
+    public int getLimite() {
+        return limite;
+    }
+
+    public void setLimite(int limite) {
+        this.limite = limite;
     }
 
     public nodo getSiguiente() {

@@ -6,6 +6,7 @@
 package proyecto;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -44,7 +46,10 @@ public class menu extends javax.swing.JFrame {
 
         initComponents();
         modelo.addColumn("Proceso");
+        modelo.addColumn("Tiempo");
         modelo.addColumn("Contador de Programa");
+        modelo.addColumn("Estado");
+  //      memoria.setBackground(Color.cyan);
         this.memoria.setModel(modelo);
         this.setLocationRelativeTo(null);
         reloj.start();
@@ -85,6 +90,7 @@ public class menu extends javax.swing.JFrame {
             }
         }
     }
+    
 
     public class RoundRobin extends Thread {
 
@@ -95,7 +101,6 @@ public class menu extends javax.swing.JFrame {
                 int cuenta = 0;
                 int proceso = 0;
                 String dir = "";
-                boolean esvacia = true;
                 try {
                     if (lista.isEmpty()) {
                         jtject.setText("En espera");
@@ -111,7 +116,9 @@ public class menu extends javax.swing.JFrame {
                                  jtject.setText("P" + proceso);
                                  jconp.setText(dir);
                                 System.out.println("proceso" + proceso);
+                                modelo.setValueAt(("Ejecutándose"), cuenta, 3);         
                                 Thread.sleep(lista.get(cuenta).getDuracion() * 1000);
+                                modelo.setValueAt(("Finalizdo"), cuenta, 3);
                                 tmemoria = tmemoria + lista.get(cuenta).getDuracion();
                                 tmem.setText(String.valueOf(tmemoria) + " mb");
                                 historial.setText(historial.getText() + "\n" + "Proceso " + String.valueOf(proceso)
@@ -128,9 +135,7 @@ public class menu extends javax.swing.JFrame {
                                 if (cuenta == 0) {
                                     cuenta = 0;
                                 } 
-  
 
-                                esvacia = lista.isEmpty();
                             }
 
                             if (lista.get(cuenta).getDuracion() > 10) {
@@ -140,10 +145,12 @@ public class menu extends javax.swing.JFrame {
                                 jtject.setText("P" + proceso);
                                 int nuevaduracion = lista.get(cuenta).getDuracion() - quantum;
                                 lista.get(cuenta).setDuracion(nuevaduracion);
-                                Thread.sleep(quantum * 1000);
+                                modelo.setValueAt(("Ejecutándose"), cuenta, 3);
+                                Thread.sleep(quantum * 1000);  
+                                modelo.setValueAt(("En espera..."), cuenta, 3);
                                 tmemoria = tmemoria + quantum;
                                 tmem.setText(String.valueOf(tmemoria) + " mb");
-                                modelo.setValueAt(("proceso  " + proceso + " " + nuevaduracion + " ms"), cuenta, 0);
+                                modelo.setValueAt((nuevaduracion + " ms"), cuenta, 1);
                                 
                                 if ((lista.size()-1) == cuenta) {
                                     cuenta = 0;
@@ -172,9 +179,11 @@ public class menu extends javax.swing.JFrame {
 
     public void Ingresar(int duracion, String dir) {
 
-        String[] info = new String[2];
-        info[0] = "proceso  " + c + " " + duracion + "ms";
-        info[1] = dir;
+        String[] info = new String[4];
+        info[0] = "proceso  " + c;
+        info[1] = duracion + " ms";
+        info[2] = dir;
+        info[3] = "En espera...";
         modelo.addRow(info);
     }
 
@@ -224,17 +233,17 @@ i-=1;
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         hora.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 630, 45, 53));
+        getContentPane().add(hora, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 650, 45, 53));
 
         minutos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(minutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 630, 45, 53));
+        getContentPane().add(minutos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 650, 45, 53));
 
         segundos.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        getContentPane().add(segundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 630, 74, 53));
+        getContentPane().add(segundos, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 650, 74, 53));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("hrs");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 650, -1, 24));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1190, 670, -1, 24));
 
         jButtonCrear.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButtonCrear.setText("AGREGAR PROCESO");
@@ -243,90 +252,90 @@ i-=1;
                 jButtonCrearActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 260, 80));
+        getContentPane().add(jButtonCrear, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 260, 80));
 
         jtject.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jtject.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jtject.setText("PROCESO");
         jtject.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jtject, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 160, 50));
+        getContentPane().add(jtject, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 160, 50));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel2.setText("LIMITE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 320, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(980, 320, -1, -1));
 
         memoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Proceso", "Contador de Programa"
+                "Proceso", "Tiempo", "Contador de Programa", "Estado"
             }
         ));
         jScrollPane3.setViewportView(memoria);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 260, 540));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 550, 540));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel3.setText("      S.O.");
+        jLabel3.setText("               S.O.");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 260, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 550, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Memoria Restante");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 620, -1, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 620, -1, 30));
 
         tmem.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         tmem.setText("500 mb");
-        getContentPane().add(tmem, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 650, -1, -1));
+        getContentPane().add(tmem, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 650, -1, -1));
 
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 460, 580));
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 10, 460, 580));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Calendarizador");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, -1, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(1030, 20, -1, -1));
 
         jconp.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
         jconp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jconp.setText("-");
         jconp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jconp, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 160, 50));
+        getContentPane().add(jconp, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 170, 160, 50));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Contador de Programa");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 140, -1, -1));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 140, -1, -1));
 
         jlimite.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jlimite.setText("   LIMITE");
         jlimite.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jlimite, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 310, 100, 50));
+        getContentPane().add(jlimite, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, 100, 50));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("BASE");
-        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 280, -1, -1));
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 280, -1, -1));
 
         jbase.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jbase.setText("     BASE");
         jbase.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jbase, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 260, 100, 50));
+        getContentPane().add(jbase, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 260, 100, 50));
 
         jLabel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 600, 330, 100));
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 610, 330, 100));
 
         historial.setColumns(20);
         historial.setRows(5);
         jScrollPane1.setViewportView(historial);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 430, 400, 130));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 430, 400, 130));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel10.setText("RELOJ EN TIEMPO REAL");
-        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 600, -1, 24));
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 620, -1, 24));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel11.setText("HISTORIAL");
-        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 390, -1, 24));
+        getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 390, -1, 24));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton1.setText("INICIAR PROCESOS");
@@ -335,7 +344,7 @@ i-=1;
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 260, 80));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 110, 260, 80));
 
         jButton2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jButton2.setText("LIMPIAR HISTORIAL");
@@ -344,7 +353,7 @@ i-=1;
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 260, 80));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 210, 260, 80));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

@@ -7,6 +7,7 @@ package proyecto;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
@@ -42,7 +43,8 @@ public class menu extends javax.swing.JFrame {
         modelo = new DefaultTableModel();
 
         initComponents();
-        modelo.addColumn("#Proceso");
+        modelo.addColumn("Proceso");
+        modelo.addColumn("Contador de Programa");
         this.memoria.setModel(modelo);
         this.setLocationRelativeTo(null);
         reloj.start();
@@ -92,6 +94,7 @@ public class menu extends javax.swing.JFrame {
             while (true) {
                 int cuenta = 0;
                 int proceso = 0;
+                String dir = "";
                 boolean esvacia = true;
                 try {
                     if (lista.isEmpty()) {
@@ -104,7 +107,9 @@ public class menu extends javax.swing.JFrame {
 
                             if (lista.get(cuenta).getDuracion() <= quantum) {
                                  proceso = lista.get(cuenta).getNumero();
+                                 dir = lista.get(cuenta).getDireccion();
                                  jtject.setText("P" + proceso);
+                                 jconp.setText(dir);
                                 System.out.println("proceso" + proceso);
                                 Thread.sleep(lista.get(cuenta).getDuracion() * 1000);
                                 tmemoria = tmemoria + lista.get(cuenta).getDuracion();
@@ -114,7 +119,8 @@ public class menu extends javax.swing.JFrame {
                                 lista.remove(cuenta);
                                 modelo.removeRow(cuenta);
                                 if (modelo.getRowCount()==0){
-                                JOptionPane.showMessageDialog(null, "Procesos Finalizados");;
+                                JOptionPane.showMessageDialog(null, "Procesos Finalizados");
+                                jconp.setText("-");
                                 break;}
                                 if(cuenta == (lista.size())){
                                     cuenta = 0;
@@ -129,6 +135,8 @@ public class menu extends javax.swing.JFrame {
 
                             if (lista.get(cuenta).getDuracion() > 10) {
                                 proceso = lista.get(cuenta).getNumero();
+                                dir = lista.get(cuenta).getDireccion();
+                                jconp.setText(dir);
                                 jtject.setText("P" + proceso);
                                 int nuevaduracion = lista.get(cuenta).getDuracion() - quantum;
                                 lista.get(cuenta).setDuracion(nuevaduracion);
@@ -162,13 +170,20 @@ public class menu extends javax.swing.JFrame {
         }
     }
 
-    public void Ingresar(int duracion) {
+    public void Ingresar(int duracion, String dir) {
 
-        String[] info = new String[1];
+        String[] info = new String[2];
         info[0] = "proceso  " + c + " " + duracion + "ms";
+        info[1] = dir;
         modelo.addRow(info);
     }
 
+public void Clear_Table1(){
+for (int i = 0; i < modelo.getRowCount(); i++) {
+modelo.removeRow(i);
+i-=1;
+}
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -192,7 +207,7 @@ public class menu extends javax.swing.JFrame {
         tmem = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabelPrejec = new javax.swing.JLabel();
+        jconp = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jlimite = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -245,25 +260,25 @@ public class menu extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Proceso"
+                "Proceso", "Contador de Programa"
             }
         ));
         jScrollPane3.setViewportView(memoria);
 
-        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 210, 540));
+        getContentPane().add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 260, 540));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
-        jLabel3.setText("    S.O.");
+        jLabel3.setText("      S.O.");
         jLabel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 210, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 550, 260, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel4.setText("Memoria Restante");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 620, -1, 30));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 620, -1, 30));
 
         tmem.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         tmem.setText("500 mb");
-        getContentPane().add(tmem, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 660, -1, -1));
+        getContentPane().add(tmem, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 650, -1, -1));
 
         jLabel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 460, 580));
@@ -272,11 +287,11 @@ public class menu extends javax.swing.JFrame {
         jLabel6.setText("Calendarizador");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, -1, -1));
 
-        jLabelPrejec.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
-        jLabelPrejec.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelPrejec.setText("-");
-        jLabelPrejec.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        getContentPane().add(jLabelPrejec, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 160, 50));
+        jconp.setFont(new java.awt.Font("Georgia", 1, 24)); // NOI18N
+        jconp.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jconp.setText("-");
+        jconp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        getContentPane().add(jconp, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 170, 160, 50));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel7.setText("Contador de Programa");
@@ -335,6 +350,7 @@ public class menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearActionPerformed
+        char obtener;
         int duracion = (int) (Math.random() * 11) + 5;
         if (tmemoria >= duracion) {
             tmemoria = tmemoria - duracion;
@@ -343,8 +359,10 @@ public class menu extends javax.swing.JFrame {
             nodo n = new nodo();
             n.setNumero(c);
             n.setDuracion(duracion);
+            obtener = (char)(96+c);    
+            n.setDireccion(String.valueOf(obtener));
             lista.add(n);
-            Ingresar(duracion);
+            Ingresar(duracion,String.valueOf(obtener));
             if ("".equals(historial.getText())) {
                 historial.setText("Proceso " + String.valueOf(c) + " agregado a las " + hora.getText() + minutos.getText() + segundos.getText() + " hrs");
             } else {
@@ -365,6 +383,7 @@ public class menu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
   historial.setText("");
+  Clear_Table1();
   c = 0;
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -420,10 +439,10 @@ public class menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelPrejec;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel jbase;
+    private javax.swing.JLabel jconp;
     private javax.swing.JLabel jlimite;
     private javax.swing.JLabel jtject;
     private javax.swing.JTable memoria;

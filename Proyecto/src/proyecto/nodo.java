@@ -14,23 +14,19 @@ public class nodo {
 //    int tamaño;
     int duracion;
     int numero;
+    String direccion;
+    
 
     private nodo siguiente;
 
     public void Nodo() {
         this.numero = 0;
         this.duracion = 0;
-//        this.tamaño = 0;
+        this.direccion = "";
         this.siguiente = null;
     }
 
-//    public int getTamaño() {
-//        return tamaño;
-//    }
-//
-//    public void setTamaño(int tamaño) {
-//        this.tamaño = tamaño;
-//    }
+
     public int getDuracion() {
         return duracion;
     }
@@ -45,6 +41,14 @@ public class nodo {
 
     public void setNumero(int numero) {
         this.numero = numero;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
     public nodo getSiguiente() {

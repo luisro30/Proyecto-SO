@@ -47,7 +47,7 @@ public class menu extends javax.swing.JFrame {
         initComponents();
         modelo.addColumn("Proceso");
         modelo.addColumn("Tiempo");
-        modelo.addColumn("Contador de Programa");
+        modelo.addColumn("Dirección");
         modelo.addColumn("Estado");
   //      memoria.setBackground(Color.cyan);
         this.memoria.setModel(modelo);
@@ -269,7 +269,7 @@ i-=1;
 
             },
             new String [] {
-                "Proceso", "Tiempo", "Contador de Programa", "Estado"
+                "Proceso", "Tiempo", "Dirección", "Estado"
             }
         ));
         jScrollPane3.setViewportView(memoria);

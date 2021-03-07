@@ -119,6 +119,8 @@ public class menu extends javax.swing.JFrame {
                 try {
                     if (lista.isEmpty()) {
                         jtject.setText("En espera");
+                        jbase.setText("-");
+                        jlimite.setText("-");
                         Thread.sleep(100);
                     } else {
                         while (modelo.getRowCount() != 0) {
@@ -318,7 +320,7 @@ public class menu extends javax.swing.JFrame {
         getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 140, -1, -1));
 
         jlimite.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jlimite.setText("   LIMITE");
+        jlimite.setText("         -");
         jlimite.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(jlimite, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 310, 100, 50));
 
@@ -330,7 +332,7 @@ public class menu extends javax.swing.JFrame {
         getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 280, -1, -1));
 
         jbase.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jbase.setText("     BASE");
+        jbase.setText("         -");
         jbase.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(jbase, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 260, 100, 50));
 
@@ -409,6 +411,8 @@ public class menu extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         historial.setText("");
+        jbase.setText("-");
+        jlimite.setText("-");
         Clear_Table1();
         c = 0;
     }//GEN-LAST:event_jButton2ActionPerformed
